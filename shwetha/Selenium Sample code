@@ -1,0 +1,67 @@
+from selenium import webdriver
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from PIL import Image, ImageEnhance
+import time
+# Specify the path to the EdgeDriver executable
+driver_path = r'C:\drivers\edgedriver_win64\msedgedriver.exe'  # Ensure this is the correct path
+# Initialize the Edge driver with the specified path using Service
+service = Service(driver_path)
+driver = webdriver.Edge(service=service)
+# Function to preprocess the screenshot
+def preprocess_image(image_path, output_path):
+    with Image.open(image_path) as img:
+        # Set a fixed resolution
+        fixed_size = (1920, 1080)
+        img = img.resize(fixed_size, Image.LANCZOS)
+        # Enhance the image clarity
+        enhancer = ImageEnhance.Sharpness(img)
+        img = enhancer.enhance(2.0)
+        # Save the processed image
+        img.save(output_path)
+try:
+    # Set a fixed window size for consistency
+    driver.set_window_size(1920, 1080)
+    # Open Google
+    driver.get("http://www.google.com")
+    print("Opened Google")
+    # Wait for the page to load
+    time.sleep(5)
+    print("Waited for the page to load")
+    # Take a screenshot of the Google homepage
+    screenshot_path = r'C:\image\screenshot_google.png'
+    processed_screenshot_path = r'C:\image\processed_screenshot_google.png'
+    driver.save_screenshot(screenshot_path)
+    preprocess_image(screenshot_path, processed_screenshot_path)
+    print(f"Processed screenshot of Google saved to {processed_screenshot_path}")
+    # Find the search box using its name attribute value
+    search_box = driver.find_element(By.NAME, "q")
+    # Type in the search query
+    search_box.send_keys("Selenium WebDriver")
+    search_box.send_keys(Keys.RETURN)
+    print("Performed search for 'Selenium WebDriver'")
+    # Wait for search results to load
+    time.sleep(5)
+    # Take a screenshot of the search results page
+    screenshot_path = r'C:\image\screenshot_search_results.png'
+    processed_screenshot_path = r'C:\image\processed_screenshot_search_results.png'
+    driver.save_screenshot(screenshot_path)
+    preprocess_image(screenshot_path, processed_screenshot_path)
+    print(f"Processed screenshot of search results saved to {processed_screenshot_path}")
+    # Click on the first search result
+    first_result = driver.find_element(By.CSS_SELECTOR, "h3")
+    first_result.click()
+    print("Clicked on the first search result")
+    # Wait for the page to load
+    time.sleep(5)
+    # Take a screenshot of the first result's page
+    screenshot_path = r'C:\image\screenshot_first_result.png'
+    processed_screenshot_path = r'C:\image\processed_screenshot_first_result.png'
+    driver.save_screenshot(screenshot_path)
+    preprocess_image(screenshot_path, processed_screenshot_path)
+    print(f"Processed screenshot of the first result's page saved to {processed_screenshot_path}")
+finally:
+    # Close the browser
+    driver.quit()
+    print("Browser closed successfully.")
