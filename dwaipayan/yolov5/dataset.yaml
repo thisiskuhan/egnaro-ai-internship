@@ -1,0 +1,9 @@
+# dataset.yaml
+train: C:/Users/Dwaipayan/1k_Website_Screenshots_and_Metadata_YOLO  # path to the training images
+val: C:/Users/Dwaipayan/1k_Website_Screenshots_and_Metadata_YOLO  # path to the validation images
+
+# number of classes
+nc: 1  # number of unique classes
+
+# class names
+names: ['object']  # name of the single class
