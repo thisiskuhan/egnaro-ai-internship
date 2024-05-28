@@ -1,0 +1,5 @@
+Roboflow: https://public.roboflow.com/object-detection/website-screenshots
+
+Huggingface: https://huggingface.co/datasets/silatus/1k_Website_Screenshots_and_Metadata
+
+CEO-Provided dataset: https://uimodeling.github.io/
